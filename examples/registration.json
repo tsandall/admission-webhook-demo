@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "name": "admission-webhook-demo",
+    "selfLink": "/apis/admissionregistration.k8s.io/v1alpha1/externaladmissionhookconfigurations/admission-webhook-demo",
+    "uid": "e2ec93b0-76dc-11e7-a33b-08002714375e",
+    "resourceVersion": "52460",
+    "generation": 1,
+    "creationTimestamp": "2017-08-01T17:14:33Z"
+  },
+  "externalAdmissionHooks": [
+    {
+      "name": "admission-webhook-demo.tsandall.github.com",
+      "clientConfig": {
+        "service": {
+          "namespace": "default",
+          "name": "admission-webhook-demo"
+        },
+        "caBundle": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURLekNDQWhPZ0F3SUJBZ0lKQUs3SXFmTTQ4clhOTUEwR0NTcUdTSWIzRFFFQkJRVUFNQmN4RlRBVEJnTlYKQkFNVURHRmtiV2x6YzJsdmJsOWpZVEFnRncweE56QTNNVGt4TnpBd01UaGFHQTh5TWpreE1EVXdOREUzTURBeApPRm93RnpFVk1CTUdBMVVFQXhRTVlXUnRhWE56YVc5dVgyTmhNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DCkFROEFNSUlCQ2dLQ0FRRUFuaGNNZUc3c21RTDlzNVc0YW5QcEZSSDFmN1U0cTRKVE9GelRldDlVM2s4VlIrVUQKbXJxdksweGtYeExVbFFrcjhXaEMyZS94VTVHRWQ0UjhXSDdZM0RxdFppS3ZOR0sxeEoxeXR1QTNkOHNKQ0g2bgoxQnF3OU4xRWNOTzN1azV6VGxHaFlSYVg5ZzgxMWorSVYzRGZoV0dlQ1RUV0VMblE1SGtZZmY1VWZVU1BuTUUwClhxN04vQVNrSWpmV0p0VW1SQ1MxZldFTWNGaExSU2I4UlBaTkExZCt5Z2lYVmw4VFd3L1lEbEErQnVueE9VaXcKdDRiVkljbElkZUZBOFdLMi9RWXlvY1FYYmg2Vzk4T0F6M1lmQ2cwMHpoRkdmQklXbjd2VWo1Q0J1dk83NDVyKwpJTno3NXpOU2I4MFVTRXR0NUJ0YVZKWmdleFJOdW8rU29OOGhwUUlEQVFBQm8zZ3dkakFkQmdOVkhRNEVGZ1FVClhoK1dUVzhVQVVSVHdLc05nQ3ZPTnJDcFhob3dSd1lEVlIwakJFQXdQb0FVWGgrV1RXOFVBVVJUd0tzTmdDdk8KTnJDcFhocWhHNlFaTUJjeEZUQVRCZ05WQkFNVURHRmtiV2x6YzJsdmJsOWpZWUlKQUs3SXFmTTQ4clhOTUF3RwpBMVVkRXdRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFRkJRQURnZ0VCQUN2NnpVY0pRc2lrWFZqTEtzUW40NVlWCm9NRENPUDNnSWtWUzBlbTNBVlNUa2NwTzkwYUYxR2dLaFFkZTRlYWFyMDlpQ0ZBOTZGYko5dTl3UU9tQW9qc0EKTVAwTktUd3lwQmRtWVd6SGZEMEF4QkFUcm5TMzZWTWNmS3VOV2ZHWU5tVFZJNWRmMDloNFN0QXZla1NEZXR4TgpTUGd0OXBxZXVsSDhIeDE0L01qSDhUYklwbTRXN1hoNjVCS05NUlJKblZxTGk0U0VqNUsrQmZiakxzUGRMSllWCjJsdy9BNHhyRHVGMlZjeHZoaVhiMm9zTXZzWHdWZEI0Qko0dFVnRDVoNkl0Q1R2YlpTTXJJdjFFNnNodnpTTEgKRGUzVHNQMVRQYkxJREtaR0ZHMkFZVGZlVWRhT00xN2pDVHNHR1M0Yy9FNWNRYnhPaHNaRTRMT3VtYk1HTU84PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+      },
+      "rules": [
+        {
+          "operations": [
+            "*"
+          ],
+          "apiGroups": [
+            ""
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "pods/*"
+          ]
+        }
+      ],
+      "failurePolicy": "Ignore"
+    }
+  ]
+}

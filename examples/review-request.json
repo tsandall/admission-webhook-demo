@@ -1,0 +1,42 @@
+{
+  "kind": "AdmissionReview",
+  "apiVersion": "admission.k8s.io/v1alpha1",
+  "spec": {
+    "kind": {
+      "group": "",
+      "version": "v1",
+      "kind": "Pod"
+    },
+    "object": {
+      "Name": "admission-webhook-demo-373699553-8srx8",
+      "Options": {
+        "Stdin": true,
+        "Stdout": true,
+        "Stderr": false,
+        "TTY": true,
+        "Container": "admission-webhook-demo",
+        "Command": [
+          "sh"
+        ]
+      },
+      "ResourcePath": "pods/exec"
+    },
+    "oldObject": null,
+    "operation": "CONNECT",
+    "name": "admission-webhook-demo-373699553-8srx8",
+    "namespace": "default",
+    "resource": {
+      "group": "",
+      "version": "v1",
+      "resource": "pods"
+    },
+    "subResource": "exec",
+    "userInfo": {
+      "username": "minikube",
+      "groups": [
+        "system:masters",
+        "system:authenticated"
+      ]
+    }
+  }
+}
