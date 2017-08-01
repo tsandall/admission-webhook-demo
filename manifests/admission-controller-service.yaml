@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: admission-webhook-demo
+spec:
+  clusterIP: 10.0.0.222
+  selector:
+    app: admission-webhook-demo
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8000

@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: admission-webhook-demo
+  name: admission-webhook-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: admission-webhook-demo
+      name: admission-webook-demo
+    spec:
+      containers:
+        - name: admission-webhook-demo
+          image: tsandall/admission-webhook-demo
+          volumeMounts:
+            - readOnly: true
+              mountPath: /certs/server
+              name: server-cert
+            - readOnly: true
+              mountPath: /certs/ca
+              name: ca-cert
+      volumes:
+        - name: server-cert
+          secret:
+            secretName: server-cert
+        - name: ca-cert
+          secret:
+            secretName: ca-cert

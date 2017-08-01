@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -29,17 +28,17 @@ func main() {
 		log.Fatalf("Failed to load client: %v", err)
 	}
 
-	caCert, err := loadCACert(clientset)
+	caCert, err := ioutil.ReadFile("/certs/ca/ca.crt")
 	if err != nil {
-		log.Fatalf("Failed to load CA certificate from API server: %v", err)
+		log.Fatalf("Failed to load CA certificate; %v", err)
 	}
 
-	serverCert, err := tls.LoadX509KeyPair("/certs/server.crt", "/certs/server.key")
+	serverCert, err := tls.LoadX509KeyPair("/certs/server/tls.crt", "/certs/server/tls.key")
 	if err != nil {
 		log.Fatalf("Failed to load server TLS keypair: %v", err)
 	}
 
-	if err := register(clientset, caCert, "alice-webhook"); err != nil {
+	if err := register(clientset, caCert, "admission-webhook-demo"); err != nil {
 		log.Fatalf("Failed to register webhook: %v", err)
 	}
 
@@ -67,21 +66,6 @@ var allowed = admissionv1.AdmissionReviewStatus{
 func admit(review admissionv1.AdmissionReview) (admissionv1.AdmissionReviewStatus, error) {
 	log.Println(review)
 	return allowed, nil
-}
-
-func loadCACert(clientset *kubernetes.Clientset) ([]byte, error) {
-
-	c, err := clientset.CoreV1().ConfigMaps("kube-system").Get("extension-apiserver-authentication", metav1.GetOptions{})
-	if err != nil {
-		return nil, err
-	}
-
-	pem, ok := c.Data["requestheader-client-ca-file"]
-	if !ok {
-		return nil, fmt.Errorf("cannot find CA certiciate in config map")
-	}
-
-	return []byte(pem), nil
 }
 
 func register(clientset *kubernetes.Clientset, caCert []byte, webhookName string) error {
