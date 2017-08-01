@@ -45,7 +45,9 @@ func main() {
 	clientCA := x509.NewCertPool()
 	clientCA.AppendCertsFromPEM(caCert)
 
-	http.HandleFunc("/", serve)
+	c := &controller{clientset}
+
+	http.HandleFunc("/", c.Serve)
 
 	server := &http.Server{
 		Addr: ":8000",
@@ -57,15 +59,6 @@ func main() {
 	}
 
 	server.ListenAndServeTLS("", "")
-}
-
-var allowed = admissionv1.AdmissionReviewStatus{
-	Allowed: true,
-}
-
-func admit(review admissionv1.AdmissionReview) (admissionv1.AdmissionReviewStatus, error) {
-	log.Println(review)
-	return allowed, nil
 }
 
 func register(clientset *kubernetes.Clientset, caCert []byte, webhookName string) error {
@@ -114,7 +107,47 @@ func register(clientset *kubernetes.Clientset, caCert []byte, webhookName string
 	}
 }
 
-func serve(w http.ResponseWriter, r *http.Request) {
+var allowed = admissionv1.AdmissionReviewStatus{
+	Allowed: true,
+}
+
+var denied = admissionv1.AdmissionReviewStatus{
+	Allowed: false,
+	Result: &metav1.Status{
+		Message: "exec into privileged pod disallowed by alice's policy",
+	},
+}
+
+type controller struct {
+	clientset *kubernetes.Clientset
+}
+
+func (c *controller) Admit(review admissionv1.AdmissionReview) (admissionv1.AdmissionReviewStatus, error) {
+
+	if review.Spec.Operation != "CONNECT" || review.Spec.SubResource != "exec" {
+		return allowed, nil
+	}
+
+	if review.Spec.Namespace != "production" {
+		return allowed, nil
+	}
+
+	pod, err := c.clientset.CoreV1().Pods(review.Spec.Namespace).Get(review.Spec.Name, metav1.GetOptions{})
+	if err != nil {
+		return allowed, err
+	}
+
+	for _, container := range pod.Spec.Containers {
+		if container.SecurityContext.Privileged != nil && *container.SecurityContext.Privileged {
+			log.Printf("Denying exec into %v because %v is privileged", review.Spec.Name, container.Name)
+			return denied, nil
+		}
+	}
+
+	return allowed, nil
+}
+
+func (c *controller) Serve(w http.ResponseWriter, r *http.Request) {
 
 	var body []byte
 	if r.Body != nil {
@@ -136,7 +169,7 @@ func serve(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	status, err := admit(review)
+	status, err := c.Admit(review)
 	if err != nil {
 		serveError(w, http.StatusInternalServerError, err.Error())
 		return
