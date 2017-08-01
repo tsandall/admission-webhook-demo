@@ -86,7 +86,7 @@ func register(clientset *kubernetes.Clientset, caCert []byte, webhookName string
 			},
 			ExternalAdmissionHooks: []admissionregistrationv1.ExternalAdmissionHook{
 				{
-					Name: webhookName,
+					Name: webhookName + ".tsandall.github.com",
 					Rules: []admissionregistrationv1.RuleWithOperations{{
 						Operations: []admissionregistrationv1.OperationType{admissionregistrationv1.OperationAll},
 						Rule: admissionregistrationv1.Rule{
