@@ -1,0 +1,6 @@
+package: github.com/tsandall/admission-webhook-demo
+import:
+  - package: k8s.io/client-go
+    version: cc44961f935a644fb82c0f4b6591543704578db7
+  - package: k8s.io/apiserver
+    version: ab57ed5a72c3b67058f665d660e23bae18339fc2
