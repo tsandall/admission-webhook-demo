@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: admission-webhook-demo
-          image: tsandall/admission-webhook-demo
+          image: tsandall/admission-webhook-demo:1fbf963
           volumeMounts:
             - readOnly: true
               mountPath: /certs/server
