@@ -48,9 +48,6 @@ function run() {
       rate=50
     fi
     echo "$green$@$reset" | pv -qL $rate
-    if [ -n "$DEMO_RUN_FAST" ]; then
-      sleep 0.5
-    fi
     OFILE="$(mktemp -t $(basename $0).XXXXXX)"
     script -q -t 0 "$OFILE" $1
     r=$?

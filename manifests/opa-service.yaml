@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: opa
+spec:
+  clusterIP: 10.0.0.222
+  selector:
+    app: opa
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443
