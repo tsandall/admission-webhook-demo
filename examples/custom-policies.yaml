@@ -1,4 +1,4 @@
-apiVersion: stable.alice.io/v1
+apiVersion: acmecorp.com/v1
 kind: Policy
 metadata:
   name: internal-image-registry
@@ -8,7 +8,7 @@ spec:
       path: "spec.containers[].image"
       match: "acmecorp.io/.*$"
 ---
-apiVersion: stable.alice.io/v1
+apiVersion: acmecorp.com/v1
 kind: Policy
 metadata:
   name: team-label-exists
