@@ -6,6 +6,7 @@ spec:
     containers:
     - image: alpine
       name: alpine
+      imagePullPolicy: IfNotPresent
       command: ["/bin/sleep"]
       args: ["999"]
       securityContext:

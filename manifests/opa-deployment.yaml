@@ -15,6 +15,7 @@ spec:
       containers:
         - name: opa
           image: openpolicyagent/opa:0.5.3
+          imagePullPolicy: IfNotPresent
           args:
             - "run"
             - "--server"
@@ -28,6 +29,7 @@ spec:
               name: server-cert
         - name: kube-mgmt
           image: openpolicyagent/kube-mgmt:0.4
+          imagePullPolicy: IfNotPresent
           args:
             - "--replicate=v1/pods"
             - "--register-admission-controller"
