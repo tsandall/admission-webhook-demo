@@ -2,8 +2,6 @@
 
 set -ex
 
-minikube delete --profile=admission-demo || true
-
 minikube start \
     --profile=admission-demo \
     --kubernetes-version=v1.8.0 \
